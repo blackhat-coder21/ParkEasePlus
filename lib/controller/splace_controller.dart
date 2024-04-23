@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:park_ease/pages/onboarding_screen/onboarding.dart';
-import '../pages/LoginPage.dart';
 
 
 
