@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../Data.dart';
-
 
 
 class Splace_Screen extends StatelessWidget {
@@ -61,16 +59,6 @@ class Splace_Screen extends StatelessWidget {
               ],
             ),
           ),
-          // Expanded(
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Image.asset(
-          //           collegeLogo,
-          //           width: 200,
-          //         )
-          //       ],
-          //     )),
         ]),
       ),
     );

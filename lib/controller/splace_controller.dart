@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:park_ease/pages/onboarding_screen/onboarding.dart';
 import '../pages/LoginPage.dart';
 
 
@@ -15,7 +16,7 @@ class SplaceController extends GetxController {
       const Duration(seconds: 6),
           () {
         // Get.offAllNamed("/map-page");
-        Get.offAll(LoginPage());
+        Get.offAll(Onboarding_screen());
         update();
       },
     );

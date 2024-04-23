@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:park_ease/bottom_nav.dart';
 
 import '../components/MyButton.dart';
 import '../components/MyTextField.dart';
-import 'MapPage.dart';
 
 
 
@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
                 icon: Icons.admin_panel_settings_rounded,
                 Btname: "LOGIN",
                 ontap: () {
-                  Get.offAll(MapPage());
+                  Get.offAll(BottomNav());
                 },
               ),
               // SizedBox(height: 20),
