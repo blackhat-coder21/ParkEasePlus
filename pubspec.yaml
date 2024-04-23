@@ -44,6 +44,8 @@ dependencies:
   image_picker: ^1.1.0
   smooth_page_indicator: ^1.1.0
   flutter_svg: ^2.0.10+1
+  permission_handler: ^11.3.1
+  geolocator: ^11.0.0
 
 
 dev_dependencies:
@@ -74,6 +76,7 @@ flutter:
     - assets/animation/
     - assets/icons/
     - assets/svgs/
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
