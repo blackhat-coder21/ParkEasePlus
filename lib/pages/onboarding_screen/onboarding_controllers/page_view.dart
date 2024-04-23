@@ -21,7 +21,7 @@ class page_view extends StatelessWidget {
       children: [
         Column(
           children: [
-            Image.asset("assets/svgs/nutritionist and plan.jpg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.6,),
+            SvgPicture.asset("assets/svgs/splash1.svg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.55,),
             Text(Custom_text.board_1,style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center),
             const SizedBox(height: 15),
             Text(Custom_text.board_sub_1,style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.center,)
@@ -29,7 +29,7 @@ class page_view extends StatelessWidget {
         ),
         Column(
           children: [
-            SvgPicture.asset("assets/svgs/Growing2.svg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.55,),
+            SvgPicture.asset("assets/svgs/splash3.svg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.55,),
             Text(Custom_text.board_2,style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center),
             const SizedBox(height: 15),
             Text(Custom_text.board_sub_2,style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.center,)
@@ -37,7 +37,7 @@ class page_view extends StatelessWidget {
         ),
         Column(
           children: [
-            SvgPicture.asset("assets/svgs/confused.svg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.55,),
+            SvgPicture.asset("assets/svgs/splash2.svg",width: Device_util.mq(context).width,height: Device_util.mq(context).height*0.55,),
             Text(Custom_text.board_3,style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center),
             const SizedBox(height: 15),
             Text(Custom_text.board_sub_3,style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.center,)

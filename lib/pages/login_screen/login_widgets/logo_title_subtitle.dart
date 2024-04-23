@@ -13,7 +13,7 @@ class login_logotitlesubtitle extends StatelessWidget {
       Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset("assets/svgs/logo.svg",height: Device_util.get_height(context)*0.15),
+        SvgPicture.asset("assets/svgs/logo_app.svg",height: Device_util.get_height(context)*0.15),
         Text("Welcome back",style: Theme.of(context).textTheme.headlineMedium,),
         const SizedBox(width: 8,),
         Text("SignIn subtitle",style: Theme.of(context).textTheme.bodyMedium,),
