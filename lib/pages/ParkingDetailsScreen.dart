@@ -9,12 +9,16 @@ class ParkingDetailsScreen extends StatelessWidget {
   final String address;
   final String imagePath;
   final double rating;
+  final double price;
+  final String desc;
 
   ParkingDetailsScreen({
     required this.name,
     required this.address,
     required this.imagePath,
     required this.rating,
+    required this.price,
+    required this.desc,
   });
 
   @override
@@ -24,16 +28,21 @@ class ParkingDetailsScreen extends StatelessWidget {
         title: Text('Parking Details'),
       ),
       body: SingleChildScrollView(
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Container(
               height: 200,
               width: double.infinity,
-              child: Image.asset(
-                imagePath, // Use the provided image path
+
+              child: Image.network(
+                imagePath, // Use the provided image URL from the ParkingSpot object
                 fit: BoxFit.cover,
               ),
+
+
             ),
             SizedBox(height: 20),
             Padding(
@@ -44,24 +53,29 @@ class ParkingDetailsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            name, // Use the provided parking name
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name, // Use the provided parking name
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            address, // Use the provided address
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey,
+                            SizedBox(height: 4), // Add spacing between the name and address
+                            Text(
+                              address, // Use the provided address
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                              maxLines: 2, // Limit the number of lines for address
+                              overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       IconButton(
                         icon: Icon(Icons.favorite),
@@ -71,6 +85,7 @@ class ParkingDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   SizedBox(height: 20),
                   SizedBox(
                     height: 40,
@@ -113,7 +128,7 @@ class ParkingDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '₹ 50',
+                            "₹ "+price.toString(),
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.blue,

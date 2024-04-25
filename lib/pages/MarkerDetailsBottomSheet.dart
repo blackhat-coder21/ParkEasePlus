@@ -22,7 +22,7 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
           name: spot.name,
           address: spot.address,
           imagePath: spot.imagePath,
-          rating: spot.rating,
+          rating: spot.rating, price: spot.price, desc: spot.desc,
         ),
       ),
     );
@@ -53,15 +53,15 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          Image.asset(
+          Image.network(
             spot.imagePath, // Using the provided imagePath
-            height: 150,
+            height: 100,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
           SizedBox(height: 10),
           Text(
-            'Parking lot of ${spot.name}',
+            ' ${spot.name}',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
