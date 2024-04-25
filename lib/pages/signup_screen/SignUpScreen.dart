@@ -122,8 +122,8 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    registerUser();
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+                    //registerUser();
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color

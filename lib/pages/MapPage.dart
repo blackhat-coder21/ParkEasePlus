@@ -1,12 +1,32 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../config/colors.dart';
 import 'MarkerDetailsBottomSheet.dart';
 
+class ParkingSpot {
+  final String name;
+  final String address;
+  final String imagePath;
+  final double latitude;
+  final double longitude;
+  final double price;
+  final double rating;
+  final String timing;
+
+  ParkingSpot({
+    required this.name,
+    required this.address,
+    required this.imagePath,
+    required this.latitude,
+    required this.longitude,
+    required this.price,
+    required this.rating,
+    required this.timing,
+  });
+}
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -16,15 +36,16 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  LatLng _center = const LatLng(45.521563, -122.677433);
   late GoogleMapController mapController;
   bool _loading = true;
   MarkerId? _selectedMarkerId;
+  List<ParkingSpot> _parkingSpots = [];
 
   @override
   void initState() {
     super.initState();
     _getUserLocation();
+    _fetchMarkersData();
   }
 
   void _getUserLocation() async {
@@ -35,10 +56,39 @@ class _MapPageState extends State<MapPage> {
     // Simulated user location for demonstration purposes
     await Future.delayed(Duration(seconds: 2));
     setState(() {
-      _center = LatLng(25.43189481661589, 81.77100976715644);
       _loading = false;
     });
-    mapController.animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
+  }
+
+  void _fetchMarkersData() async {
+    // Fetch marker data from Firestore
+    final QuerySnapshot allPlacesSnapshot =
+    await FirebaseFirestore.instance.collection('allplace').get();
+
+    final List spotIds =
+    allPlacesSnapshot.docs.map((doc) => doc['spot_id']).toList();
+
+    final List<DocumentSnapshot<Map<String, dynamic>>> parkSpotsSnapshot =
+    await Future.wait(spotIds.map((spotId) =>
+        FirebaseFirestore.instance.collection('parkSpot').doc(spotId).get()));
+
+    final List<ParkingSpot> parkingSpots = parkSpotsSnapshot.map((doc) {
+      final data = doc.data() ?? {};
+      return ParkingSpot(
+        name: data['name'] ?? '',
+        address: data['address'] ?? '',
+        imagePath: data['imagePath'] ?? '',
+        latitude: double.parse(data['latitude'] ?? '0'),
+        longitude: double.parse(data['longitude'] ?? '0'),
+        price: double.parse(data['price'] ?? '0'),
+        rating: double.parse(data['rating'] ?? '0'),
+        timing: data['timing'] ?? '',
+      );
+    }).toList();
+
+    setState(() {
+      _parkingSpots = parkingSpots;
+    });
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -58,6 +108,7 @@ class _MapPageState extends State<MapPage> {
       _selectedMarkerId = null;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,32 +128,24 @@ class _MapPageState extends State<MapPage> {
           GoogleMap(
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
-              target: _center,
+              target: LatLng(25.43189481661589, 81.77100976715644),
               zoom: 11.0,
             ),
-            markers: {
-              Marker(
-                markerId: MarkerId('parking_2'),
-                position: LatLng(25.43189481661589, 81.77100976715644),
+            markers: _parkingSpots.map((spot) {
+              final MarkerId markerId = MarkerId(spot.name);
+              final LatLng position = LatLng(spot.latitude, spot.longitude);
+              return Marker(
+                markerId: markerId,
+                position: position,
                 onTap: () {
-                  _openMarkerDetails(MarkerId('parking_2'));
+                  _openMarkerDetails(markerId);
                 },
-              ),
-              Marker(
-                markerId: MarkerId('parking_3'),
-                position: LatLng(25.430154274957776, 81.77214426349292),
-                onTap: () {
-                  _openMarkerDetails(MarkerId('parking_3'));
-                },
-              ),
-              Marker(
-                markerId: MarkerId('parking_4'),
-                position: LatLng(25.428372733724473, 81.77286038756941),
-                onTap: () {
-                  _openMarkerDetails(MarkerId('parking_4'));
-                },
-              ),
-            },
+                infoWindow: InfoWindow(
+                  title: spot.name,
+                  snippet: 'Lat: ${spot.latitude}, Long: ${spot.longitude}',
+                ),
+              );
+            }).toSet(),
             myLocationButtonEnabled: true,
           ),
           if (_loading)
@@ -119,16 +162,13 @@ class _MapPageState extends State<MapPage> {
                 child: MarkerDetailsBottomSheet(
                   markerId: _selectedMarkerId!,
                   onClose: _closeMarkerDetails,
+                  spot: _parkingSpots
+                      .firstWhere((spot) => spot.name == _selectedMarkerId!.value),
                 ),
               ),
             ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _getUserLocation,
-      //   child: Icon(Icons.my_location),
-      //   backgroundColor: blueColor,
-      // ),
     );
   }
 }

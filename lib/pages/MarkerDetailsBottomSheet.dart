@@ -1,26 +1,33 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'MapPage.dart';
 import 'ParkingDetailsScreen.dart';
-
-
 
 class MarkerDetailsBottomSheet extends StatelessWidget {
   final MarkerId markerId;
   final VoidCallback onClose;
+  final ParkingSpot spot;
 
   MarkerDetailsBottomSheet({
     required this.markerId,
     required this.onClose,
+    required this.spot,
   });
+
   void _navigateToParkingDetailsScreen(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ParkingDetailsScreen(markerId: markerId),
+        builder: (context) => ParkingDetailsScreen(
+          name: spot.name,
+          address: spot.address,
+          imagePath: spot.imagePath,
+          rating: spot.rating,
+        ),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,21 +54,21 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Image.asset(
-            'assets/images/tmp.jpg', // Replace with your image path
+            spot.imagePath, // Using the provided imagePath
             height: 150,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
           SizedBox(height: 10),
           Text(
-            'Parking lot of ${markerId.value}',
+            'Parking lot of ${spot.name}',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            'CQJC+QC2, IIITA, Jhalwa, Chak Dadanpur, Prayagraj, Uttar Pradesh 211011',
+            spot.address,
             style: TextStyle(
               fontSize: 16,
             ),
@@ -76,14 +83,15 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Implement continue action
                   _navigateToParkingDetailsScreen(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Set the background color to blue
+                  backgroundColor: Colors.blue,
                 ),
-                child: Text('Details ->',style: TextStyle(color:Colors.white ),),
-
+                child: Text(
+                  'Details ->',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
