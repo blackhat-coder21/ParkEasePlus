@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:park_ease/bottom_nav.dart';
 import 'package:park_ease/pages/splace_page/splace_screen.dart';
 import 'config/routes.dart';
 import 'controller/splace_controller.dart';
+
+
 
 void main() async {
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Car Parking',
       getPages: pages,
       theme: ThemeData(useMaterial3: true),
-      home: const BottomNav(),
+      home: const Splace_Screen(),
     );
   }
 }

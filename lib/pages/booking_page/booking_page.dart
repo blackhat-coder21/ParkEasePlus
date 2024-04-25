@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import '../../config/colors.dart';
 import '../../controller/PakingController.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -19,6 +20,10 @@ class BookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ParkingController parkingController = Get.put(ParkingController());
+
+    DateTime selectedDate = DateTime.now();
+    DateTime date;
+    TimeOfDay selectedTime = TimeOfDay.now();
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -47,88 +52,57 @@ class BookingPage extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Lottie.asset(
-                      'assets/animation/running_car.json',
-                      width: 300,
-                      height: 200,
+                    IconButton(
+                      onPressed: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDate,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(DateTime.now().year + 1),
+                        );
+                        if (pickedDate != null && pickedDate != selectedDate) {
+                          selectedDate = pickedDate;
+                          // Do something with the selected date
+                        }
+                      },
+                      icon: Icon(Icons.calendar_today),
+                      color: Colors.blue,
+                      iconSize: 30,
+                    ),
+                    SizedBox(width: 10),
+                    TextButton(
+                      onPressed: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDate,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(DateTime.now().year + 1),
+                        );
+                        if (pickedDate != null && pickedDate != selectedDate) {
+                          selectedDate = pickedDate;
+                          // Do something with the selected date
+                        }
+                      },
+                      child: Text(
+                        'Select Date: ',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 20), // Adjust the spacing as needed
+                    Text(
+                      DateFormat('yyyy-MM-dd').format(selectedDate),
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 20),
-                const Row(
-                  children: [
-                    Text(
-                      "Book Now 😊",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )
-                  ],
-                ),
-                Divider(
-                  thickness: 1,
-                  color: blueColor,
-                ),
-                SizedBox(height: 30),
-                const Row(
-                  children: [
-                    Text(
-                      "Enter your name ",
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: parkingController.name,
-                        decoration: const InputDecoration(
-                          fillColor: lightBg,
-                          filled: true,
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: blueColor,
-                          ),
-                          hintText: "ZYX Kumar",
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 30),
-                const Row(
-                  children: [
-                    Text(
-                      "Enter Vehicle Number ",
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: parkingController.vehicalNumber,
-                        decoration: const InputDecoration(
-                          fillColor: lightBg,
-                          filled: true,
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.car_rental,
-                            color: blueColor,
-                          ),
-                          hintText: "WB 04 ED 0987",
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 20),
+
                 const Row(
                   children: [
                     Text(
@@ -174,6 +148,71 @@ class BookingPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Select Start Hour",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    final TimeOfDay? pickedTime = await showTimePicker(
+                      context: context,
+                      initialTime: selectedTime,
+                    );
+                    if (pickedTime != null && pickedTime != selectedTime) {
+                      selectedTime = pickedTime;
+                      // Do something with the selected time
+                    }
+                  },
+                  icon: Icon(Icons.access_time),
+                  color: Colors.blue,
+                  iconSize: 30,
+                ),
+                SizedBox(width: 10),
+                TextButton(
+                  onPressed: () async {
+                    final TimeOfDay? pickedTime = await showTimePicker(
+                      context: context,
+                      initialTime: selectedTime,
+                    );
+                    if (pickedTime != null && pickedTime != selectedTime) {
+                      selectedTime = pickedTime;
+                      // Do something with the selected time
+                    }
+                  },
+                  child: Text(
+                    'Select Start Hour',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  selectedTime.format(context),
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+                ],
+        ),
+
+
+
+
+                SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [

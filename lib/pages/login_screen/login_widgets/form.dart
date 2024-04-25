@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../bottom_nav.dart';
+import '../../signup_screen/SignUpScreen.dart';
 
 
 class form_signincreateaccount extends StatefulWidget {
@@ -146,12 +147,13 @@ class _form_signincreateaccountState extends State<form_signincreateaccount> {
 
             const SizedBox(height: 16,),
 
-            // SizedBox(width: double.infinity,child: OutlinedButton(onPressed: (){
-            //   Navigator.pushNamed(context,SignUp_screen.route_name);
-            //   },
-            //     style: Theme.of(context).outlinedButtonTheme.style,
-            //     child: const Text("Create Account")),
-            // ),
+            SizedBox(width: double.infinity,child: OutlinedButton(onPressed: (){
+              // Navigator.pushNamed(context,SignUp_screen.route_name);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp_screen()));
+              },
+                style: Theme.of(context).outlinedButtonTheme.style,
+                child: const Text("Create Account")),
+            ),
           ],
 
         ));
