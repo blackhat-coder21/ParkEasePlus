@@ -22,7 +22,7 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
           name: spot.name,
           address: spot.address,
           imagePath: spot.imagePath,
-          rating: spot.rating, price: spot.price, desc: spot.desc,
+          rating: spot.rating, price: spot.price, desc: spot.desc,id:spot.id
         ),
       ),
     );

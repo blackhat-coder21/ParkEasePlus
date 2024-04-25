@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,6 +12,7 @@ class ParkingDetailsScreen extends StatelessWidget {
   final double rating;
   final double price;
   final String desc;
+  final String id;
 
   ParkingDetailsScreen({
     required this.name,
@@ -19,8 +21,9 @@ class ParkingDetailsScreen extends StatelessWidget {
     required this.rating,
     required this.price,
     required this.desc,
+    required this.id,
   });
-
+String user="himanshurajhr8";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,15 +80,30 @@ class ParkingDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.favorite),
+                      ElevatedButton.icon(
                         onPressed: () {
-                          // Add your favorite button logic here
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user)
+                              .collection('savedSpots')
+                              .add({
+                            'spot_id': id,
+                          })
+                              .then((value) {
+                            // Close the dialog
+                            Navigator.pop(context);
+                          })
+                              .catchError((error) {
+                            // Handle errors if any
+                            print("Failed to add bookmark: $error");
+                          });
                         },
+                        icon: Icon(Icons.bookmark),
+                        label: Text(''), // Set empty Text widget for the label
                       ),
-                    ],
+                    ]
+                    ,
                   ),
-
                   SizedBox(height: 20),
                   SizedBox(
                     height: 40,

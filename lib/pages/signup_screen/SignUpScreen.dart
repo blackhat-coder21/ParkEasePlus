@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:park_ease/config/db.dart';
 import 'package:park_ease/pages/signup_screen/signup_widgets/form.dart';
@@ -36,37 +39,38 @@ class _SignUp_screenState extends State<SignUp_screen> {
 
   // for api post request
   // final Auth_service auth_service = Auth_service();
-  void registerUser() async{
-    if(_firstname_controller.text.isNotEmpty && _secondname_controller.text.isNotEmpty &&
-        _address_controller.text.isNotEmpty && _phonenumber_controller.text.isNotEmpty &&
-        _email_controller.text.isNotEmpty && _password_controller.text.isNotEmpty){
-      var regBody = {
-        "first":_firstname_controller.text,
-        "last":_secondname_controller.text,
-        "phone":_phonenumber_controller.text,
-        "address":_address_controller.text,
-        "email":_email_controller.text,
-        "password":_password_controller.text,
-      };
+  void registerUser() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _email_controller.text,
+        password: _password_controller.text,
+      );
 
-      var response = await http.post(Uri.parse(registration),
-      headers: {"Content-Type":"application/json"},
-      body: jsonEncode(regBody));
+      // User successfully registered, you can now proceed with any additional data handling
+      User? user = userCredential.user;
+      if (user != null) {
+        print("mlo "+_firstname_controller.text);
+        // Save additional user data to Realtime Database
+        final reference = FirebaseDatabase.instance.reference().child('userNew').child(user.uid);
+        reference.set({
+          'first_name': _firstname_controller.text,
+          'last_name': _secondname_controller.text,
+          'phone': _phonenumber_controller.text,
+          'address': _address_controller.text,
+        });
 
-      var jsonResponse = jsonDecode(response.body);
-      print(jsonResponse['status']);
-
-      if(jsonResponse['status']){
         Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+      } else {
+        // Handle error
+        print("User registration failed");
       }
-      else{
-        print("Something went wrong");
-      }
-    }
-    else{
-      // not handled yet
+    } catch (e) {
+      // Handle any errors that occur during registration
+      print("Error registering user: $e");
     }
   }
+
+
 
   @override
   void dispose() {
@@ -122,8 +126,8 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    //registerUser();
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+                    registerUser();
+                     //Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
