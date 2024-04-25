@@ -5,9 +5,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'SelectVehiclePage.dart';
 
 class ParkingDetailsScreen extends StatelessWidget {
-  final MarkerId markerId;
+  final String name;
+  final String address;
+  final String imagePath;
+  final double rating;
 
-  ParkingDetailsScreen({required this.markerId});
+  ParkingDetailsScreen({
+    required this.name,
+    required this.address,
+    required this.imagePath,
+    required this.rating,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class ParkingDetailsScreen extends StatelessWidget {
               height: 200,
               width: double.infinity,
               child: Image.asset(
-                'assets/images/tmp.jpg', // Replace with your image path
+                imagePath, // Use the provided image path
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,14 +48,14 @@ class ParkingDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Parking Name',
+                            name, // Use the provided parking name
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Address',
+                            address, // Use the provided address
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.grey,
@@ -70,18 +78,19 @@ class ParkingDetailsScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 8),
-                          child: _buildInfoBox(Icons.location_on, '5 km'),
+                          child: _buildInfoBox(Icons.location_on, '5 km'), // Fixed distance
                         ),
                         SizedBox(width: 8),
-                        _buildInfoBox(Icons.access_time_filled_rounded, '8 AM - 9 PM'),
+                        _buildInfoBox(Icons.access_time_filled_rounded, '8 AM - 9 PM'), // Fixed time
                         SizedBox(width: 8),
                         Padding(
                           padding: EdgeInsets.only(right: 8),
-                          child: _buildInfoBox(Icons.star, '4.5'),
+                          child: _buildInfoBox(Icons.star, rating.toString()), // Use provided rating
                         ),
                       ],
                     ),
                   ),
+
                   SizedBox(height: 20),
                   Text(
                     'Description',
@@ -144,12 +153,18 @@ class ParkingDetailsScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Implement book parking action
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SelectVehiclePage())); // Replace the current route with the homepage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectVehiclePage()),
+                ); // Replace the current route with the homepage
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue, // Set the background color to blue
               ),
-              child: Text('Book Parking',style: TextStyle(color:Colors.white ),),
+              child: Text(
+                'Book Parking',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

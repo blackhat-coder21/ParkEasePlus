@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import '../../config/colors.dart';
 import '../../controller/PakingController.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import 'package:intl/intl.dart';
 
 
@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 class BookingPage extends StatelessWidget {
   final String slotName;
   final String slotId;
-  final Razorpay _razorpay = Razorpay();
+  //final Razorpay _razorpay = Razorpay();
 
   BookingPage({Key? key, required this.slotId, required this.slotName})
       : super(key: key);
@@ -25,9 +25,9 @@ class BookingPage extends StatelessWidget {
     DateTime date;
     TimeOfDay selectedTime = TimeOfDay.now();
 
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
 
 
     return Scaffold(
@@ -309,21 +309,21 @@ class BookingPage extends StatelessWidget {
     );
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print("Payment Success: ${response.paymentId}");
-    // Navigate to success screen or perform necessary actions
-    BookedPopup();
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    print("Payment Error: ${response.code} - ${response.message}");
-    // Show error message to the user
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    print("External Wallet: ${response.walletName}");
-    // Perform necessary actions for external wallet payments
-  }
+  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  //   print("Payment Success: ${response.paymentId}");
+  //   // Navigate to success screen or perform necessary actions
+  //   BookedPopup();
+  // }
+  //
+  // void _handlePaymentError(PaymentFailureResponse response) {
+  //   print("Payment Error: ${response.code} - ${response.message}");
+  //   // Show error message to the user
+  // }
+  //
+  // void _handleExternalWallet(ExternalWalletResponse response) {
+  //   print("External Wallet: ${response.walletName}");
+  //   // Perform necessary actions for external wallet payments
+  // }
 
 
   void _openCheckout(double amount) {
@@ -339,7 +339,7 @@ class BookingPage extends StatelessWidget {
       // }
     };
     try {
-      _razorpay.open(options);
+      //_razorpay.open(options);
     } catch (e) {
       debugPrint('Error: $e');
     }
