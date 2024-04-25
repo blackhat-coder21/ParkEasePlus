@@ -15,6 +15,7 @@ class ParkingSpot {
   final double price;
   final double rating;
   final String timing;
+  final String desc;
 
   ParkingSpot({
     required this.name,
@@ -25,6 +26,7 @@ class ParkingSpot {
     required this.price,
     required this.rating,
     required this.timing,
+    required this.desc,
   });
 }
 
@@ -69,20 +71,23 @@ class _MapPageState extends State<MapPage> {
     allPlacesSnapshot.docs.map((doc) => doc['spot_id']).toList();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> parkSpotsSnapshot =
-    await Future.wait(spotIds.map((spotId) =>
-        FirebaseFirestore.instance.collection('parkSpot').doc(spotId).get()));
+    await Future.wait(
+      spotIds.map((spotId) =>
+          FirebaseFirestore.instance.collection('parkSpot').doc(spotId).get()),
+    );
 
     final List<ParkingSpot> parkingSpots = parkSpotsSnapshot.map((doc) {
       final data = doc.data() ?? {};
       return ParkingSpot(
         name: data['name'] ?? '',
-        address: data['address'] ?? '',
-        imagePath: data['imagePath'] ?? '',
-        latitude: double.parse(data['latitude'] ?? '0'),
-        longitude: double.parse(data['longitude'] ?? '0'),
+        address: data['add'] ?? '',
+        imagePath: data['imgPath'] ?? '',
+        latitude: double.parse(data['lat'] ?? '0'),
+        longitude: double.parse(data['long'] ?? '0'),
         price: double.parse(data['price'] ?? '0'),
         rating: double.parse(data['rating'] ?? '0'),
         timing: data['timing'] ?? '',
+        desc: data['desc'] ?? ''
       );
     }).toList();
 
@@ -134,16 +139,17 @@ class _MapPageState extends State<MapPage> {
             markers: _parkingSpots.map((spot) {
               final MarkerId markerId = MarkerId(spot.name);
               final LatLng position = LatLng(spot.latitude, spot.longitude);
+              print("IMG "+spot.imagePath);
               return Marker(
                 markerId: markerId,
                 position: position,
                 onTap: () {
                   _openMarkerDetails(markerId);
                 },
-                infoWindow: InfoWindow(
-                  title: spot.name,
-                  snippet: 'Lat: ${spot.latitude}, Long: ${spot.longitude}',
-                ),
+                // infoWindow: InfoWindow(
+                //   title: spot.name,
+                //   snippet: 'Lat: ${spot.latitude}, Long: ${spot.longitude}',
+                // ),
               );
             }).toSet(),
             myLocationButtonEnabled: true,
@@ -162,8 +168,7 @@ class _MapPageState extends State<MapPage> {
                 child: MarkerDetailsBottomSheet(
                   markerId: _selectedMarkerId!,
                   onClose: _closeMarkerDetails,
-                  spot: _parkingSpots
-                      .firstWhere((spot) => spot.name == _selectedMarkerId!.value),
+                  spot: _parkingSpots.firstWhere((spot) => spot.name == _selectedMarkerId!.value),
                 ),
               ),
             ),
