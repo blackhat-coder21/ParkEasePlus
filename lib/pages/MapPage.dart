@@ -16,6 +16,7 @@ class ParkingSpot {
   final double rating;
   final String timing;
   final String desc;
+  final String id;
 
   ParkingSpot({
     required this.name,
@@ -27,6 +28,7 @@ class ParkingSpot {
     required this.rating,
     required this.timing,
     required this.desc,
+    required this.id,
   });
 }
 
@@ -87,7 +89,8 @@ class _MapPageState extends State<MapPage> {
         price: double.parse(data['price'] ?? '0'),
         rating: double.parse(data['rating'] ?? '0'),
         timing: data['timing'] ?? '',
-        desc: data['desc'] ?? ''
+        desc: data['desc'] ?? '',
+        id: data['id'] ?? ''
       );
     }).toList();
 
