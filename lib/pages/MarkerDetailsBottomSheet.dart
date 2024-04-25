@@ -79,7 +79,11 @@ class MarkerDetailsBottomSheet extends StatelessWidget {
                   // Implement continue action
                   _navigateToParkingDetailsScreen(context);
                 },
-                child: Text('Details ->'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue, // Set the background color to blue
+                ),
+                child: Text('Details ->',style: TextStyle(color:Colors.white ),),
+
               ),
             ],
           ),

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../config/colors.dart';
 import 'MarkerDetailsBottomSheet.dart';
@@ -56,7 +58,6 @@ class _MapPageState extends State<MapPage> {
       _selectedMarkerId = null;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
