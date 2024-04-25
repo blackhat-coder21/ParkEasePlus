@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:park_ease/config/db.dart';
 import 'package:park_ease/pages/signup_screen/signup_widgets/form.dart';
 import 'package:park_ease/pages/signup_screen/signup_widgets/terms_and_conditions.dart';
 import '../../bottom_nav.dart';
 import '../../utils/devices_utils/device_util.dart';
 import '../login_screen/login_widgets/divider.dart';
 import '../login_screen/login_widgets/google.dart';
+import 'package:http/http.dart' as http;
 import '../onboarding_screen/onboarding.dart';
 
 
@@ -32,6 +36,37 @@ class _SignUp_screenState extends State<SignUp_screen> {
 
   // for api post request
   // final Auth_service auth_service = Auth_service();
+  void registerUser() async{
+    if(_firstname_controller.text.isNotEmpty && _secondname_controller.text.isNotEmpty &&
+        _address_controller.text.isNotEmpty && _phonenumber_controller.text.isNotEmpty &&
+        _email_controller.text.isNotEmpty && _password_controller.text.isNotEmpty){
+      var regBody = {
+        "first":_firstname_controller.text,
+        "last":_secondname_controller.text,
+        "phone":_phonenumber_controller.text,
+        "address":_address_controller.text,
+        "email":_email_controller.text,
+        "password":_password_controller.text,
+      };
+
+      var response = await http.post(Uri.parse(registration),
+      headers: {"Content-Type":"application/json"},
+      body: jsonEncode(regBody));
+
+      var jsonResponse = jsonDecode(response.body);
+      print(jsonResponse['status']);
+
+      if(jsonResponse['status']){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+      }
+      else{
+        print("Something went wrong");
+      }
+    }
+    else{
+      // not handled yet
+    }
+  }
 
   @override
   void dispose() {
@@ -87,7 +122,8 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+                    registerUser();
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
@@ -106,11 +142,11 @@ class _SignUp_screenState extends State<SignUp_screen> {
 
               const SizedBox(height: 24,),
 
-              login_divider(dark: dark, divider_text: "or signup using"),
+              // login_divider(dark: dark, divider_text: "or signup using"),
 
               const SizedBox(height: 16,),
 
-              const login_googlefacebook()
+              // const login_googlefacebook()
             ],
           ),
         ),

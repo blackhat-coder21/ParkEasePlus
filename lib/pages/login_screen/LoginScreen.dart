@@ -40,6 +40,7 @@ class _Login_screenState extends State<Login_screen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20,),
               // Logo,title and subtitle
               const login_logotitlesubtitle(),
 
@@ -51,12 +52,12 @@ class _Login_screenState extends State<Login_screen> {
               const SizedBox(height: 32,),
 
               // Divider
-              login_divider(dark: dark, divider_text: "or sign in with",),
+              // login_divider(dark: dark, divider_text: "or sign in with",),
 
               const SizedBox(height: 16,),
 
               // Google signin option
-              const login_googlefacebook()
+              // const login_googlefacebook()
 
             ],
           ),

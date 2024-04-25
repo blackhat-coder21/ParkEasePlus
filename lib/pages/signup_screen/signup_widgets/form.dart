@@ -43,7 +43,7 @@ class _signup_formState extends State<signup_form> {
 
   @override
   Widget build(BuildContext context) {
-    bool dark = Device_util.is_dark_mode(context);
+    // bool dark = Device_util.is_dark_mode(context);
     return Form(
         key: widget.signup_formkey ,
         child: Column(
