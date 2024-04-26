@@ -123,37 +123,6 @@ class _form_signincreateaccountState extends State<form_signincreateaccount> {
             //   Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
             // },
             //   child: const Text("Sign-In"),),),
-
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Rounded corners
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16), // Button padding
-                ),
-                child: const Text(
-                  "Sign-In",
-                  style: TextStyle(fontSize: 16), // Button text style
-                ),
-              ),
-            ),
-
-
-            const SizedBox(height: 16,),
-
-            SizedBox(width: double.infinity,child: OutlinedButton(onPressed: (){
-              // Navigator.pushNamed(context,SignUp_screen.route_name);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp_screen()));
-              },
-                style: Theme.of(context).outlinedButtonTheme.style,
-                child: const Text("Create Account")),
-            ),
           ],
 
         ));

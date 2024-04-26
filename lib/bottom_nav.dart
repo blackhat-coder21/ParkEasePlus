@@ -43,4 +43,4 @@ class BottomNav extends StatelessWidget {
       body: Obx(() => controller.screens[controller.selected_index.value]),
     );
   }
-}
+} 
