@@ -3,6 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:park_ease/pages/profile_page/section_heading.dart';
 import 'package:park_ease/pages/profile_page/settings_menu_tile.dart';
 import 'Profile_screen.dart';
+import 'package:park_ease/pages/login_screen/LoginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -157,8 +159,13 @@ class SettingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   OutlinedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the bottom sheet
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context)=>Login_screen()),
+                      );
+                      // Navigator.pop(context);
                       // Perform logout action
                     },
                     style: OutlinedButton.styleFrom(

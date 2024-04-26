@@ -95,7 +95,8 @@ class HomePage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ParkingSlot(
-                      isBooked: parkingController.slot2.value.booked,
+                      // isBooked: parkingController.slot2.value.booked,
+                      isBooked: true,
                       isParked: parkingController.slot2.value.isParked,
                       slotName: "A-2",
                       slotId: "2",
@@ -140,7 +141,8 @@ class HomePage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: ParkingSlot(
-                          isBooked: parkingController.slot5.value.booked,
+                          // isBooked: parkingController.slot5.value.booked,
+                          isBooked: true,
                           isParked: parkingController.slot5.value.isParked,
                           slotName: "A-5",
                           slotId: "5",

@@ -25,14 +25,14 @@ class CanceledTab extends StatelessWidget {
     ParkingSpot(
       title: 'Parking Spot 1',
       address: '123 Street, City',
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://tse2.mm.bing.net/th?id=OIP.k9VwWExMOA0o0ghLrz_s4AHaE6&pid=Api&P=0&h=180',
       cost: 10.0,
       paymentStatus: 'Cancelled',
     ),
     ParkingSpot(
       title: 'Parking Spot 2',
       address: '456 Avenue, Town',
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.L2DC3-xxRAg2r69F8DYfEwHaFj&pid=Api&P=0&h=180',
       cost: 15.0,
       paymentStatus: 'Cancelled',
     ),
@@ -80,7 +80,7 @@ class CanceledTab extends StatelessWidget {
                           Row(
                             children: [
                               Text('Cost: '),
-                              Text('\$${spot.cost.toString()}', style: TextStyle(color: blueColor, fontWeight: FontWeight.bold),),
+                              Text('₹${spot.cost.toString()}', style: TextStyle(color: blueColor, fontWeight: FontWeight.bold),),
                               Text('/hrs'),
                             ],
                           ),

@@ -25,21 +25,21 @@ class OngoingTab extends StatelessWidget {
     ParkingSpot(
       title: 'Parking Spot 1',
       address: '123 Street, City',
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://tse4.mm.bing.net/th?id=OIP.4h2aHn4eNs4qAVk5P9sO1QHaEO&pid=Api&P=0&h=180',
       cost: 10.0,
       paymentStatus: 'Pending',
     ),
     ParkingSpot(
       title: 'Parking Spot 2',
       address: '456 Avenue, Town',
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://tse3.mm.bing.net/th?id=OIP.6B7ofsyutpZYMY1hZF8iTQHaFj&pid=Api&P=0&h=180',
       cost: 15.0,
       paymentStatus: 'Failed',
     ),
     ParkingSpot(
       title: 'Parking Spot 3',
       address: '985 Cape, Town',
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.L2DC3-xxRAg2r69F8DYfEwHaFj&pid=Api&P=0&h=180',
       cost: 15.0,
       paymentStatus: 'Paid',
     ),
@@ -87,7 +87,7 @@ class OngoingTab extends StatelessWidget {
                           Row(
                             children: [
                               Text('Cost: '),
-                              Text('\$${spot.cost.toString()}', style: TextStyle(color: blueColor, fontWeight: FontWeight.bold),),
+                              Text('₹${spot.cost.toString()}', style: TextStyle(color: blueColor, fontWeight: FontWeight.bold),),
                               Text('/hrs'),
                             ],
                           ),
@@ -154,9 +154,7 @@ class OngoingTab extends StatelessWidget {
                       ),
                       SizedBox(width: Device_util.get_width(context)*0.15,),
                       ElevatedButton(
-                        onPressed: () {
-                          // Implement view ticket action
-                        },
+                        onPressed: () => _viewTicket(context, spot),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white, backgroundColor: blueColor,
                           side: BorderSide(color: blueColor), // Border color
@@ -233,6 +231,59 @@ class OngoingTab extends StatelessWidget {
                     child: Text('Cancel'),
                   ),
                 ],
+              ),
+              SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _viewTicket(BuildContext context, ParkingSpot spot) async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(18),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Parking Ticket',
+                style: TextStyle(fontSize: 24, color: blueColor, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Divider(
+                color: Colors.grey,
+                height: 20,
+                thickness: 1,
+                indent: 0,
+                endIndent: 0,
+              ),
+              SizedBox(height: 16),
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(spot.imageUrl),
+                ),
+                title: Text(spot.title),
+                subtitle: Text(spot.address),
+                trailing: Text(
+                  'Cost: \$${spot.cost.toString()} /hrs\nPayment Status: ${spot.paymentStatus}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: blueColor,
+                  side: BorderSide(color: blueColor),
+                ),
+                child: Text('Close'),
               ),
               SizedBox(height: 16),
             ],
